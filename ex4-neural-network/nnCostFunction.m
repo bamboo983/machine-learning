@@ -62,25 +62,21 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% Input layer
+a1 = [ones(m, 1) X];
 
+% Hidden layer
+a2 = sigmoid(a1 * Theta1');
+a2 = [ones(size(a2, 1), 1) a2];
 
+% Output layer
+a3 = sigmoid(a2 * Theta2');
 
+% One-hot encode
+y = repmat((1:num_labels), m, 1) == repmat(y, 1, num_labels);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-% -------------------------------------------------------------
+% Compute cost
+J = sum(sum(-y .* log(a3) - (1 - y) .* log(1 - a3))) / m;
 
 % =========================================================================
 
