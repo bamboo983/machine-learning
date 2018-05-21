@@ -3,3 +3,4 @@ Programming assignments on Coursera [Machine Learning](https://www.coursera.org/
 
 ## Programming Assignments
 1. Linear regression
+2. Logistic regression
