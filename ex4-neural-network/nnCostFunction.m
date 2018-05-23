@@ -75,8 +75,14 @@ a3 = sigmoid(a2 * Theta2');
 % One-hot encode
 y = repmat((1:num_labels), m, 1) == repmat(y, 1, num_labels);
 
+% Regularization
+regTheta1 =  Theta1(:,2:end);
+regTheta2 =  Theta2(:,2:end);
+
+reg = lambda * (sum(sum(regTheta1.^2)) + sum(sum(regTheta2.^2))) / (2 * m);
+
 % Compute cost
-J = sum(sum(-y .* log(a3) - (1 - y) .* log(1 - a3))) / m;
+J = sum(sum(-y .* log(a3) - (1 - y) .* log(1 - a3))) / m + reg;
 
 % =========================================================================
 
