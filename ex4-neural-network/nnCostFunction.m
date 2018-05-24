@@ -84,6 +84,28 @@ reg = lambda * (sum(sum(regTheta1.^2)) + sum(sum(regTheta2.^2))) / (2 * m);
 % Compute cost
 J = sum(sum(-y .* log(a3) - (1 - y) .* log(1 - a3))) / m + reg;
 
+d1 = zeros(size(Theta1));
+d2 = zeros(size(Theta2));
+for t = 1:m
+    a1_t = a1(t, :);
+    a2_t = a2(t, :);
+    a3_t = a3(t, :);
+    y_t = y(t, :);
+
+    % Compute output layer
+    delta3 = a3_t - y_t;
+
+    % Compute hidden layer
+    delta2 = Theta2' * delta3' .* sigmoidGradient([1; Theta1 * a1_t']);
+
+    % Accumulate gradient
+    d1 = d1 + delta2(2:end) * a1_t;
+    d2 = d2 + delta3' * a2_t;
+end
+
+Theta1_grad = d1 / m;
+Theta2_grad = d2 / m;
+
 % =========================================================================
 
 % Unroll gradients
